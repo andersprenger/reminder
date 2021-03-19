@@ -8,15 +8,15 @@
 import Foundation
 
 struct Main {
-    var lists: Array<List>
+    var myLists: [List]
     var local: Locale
     
     init() {
-        lists = Array<List>()
+        myLists = []
         local = Locale.current
     }
     
-    func main() {
+    mutating func main() {
         print("Reminder")
         while true {
             print("Digit an option:")
@@ -28,66 +28,116 @@ struct Main {
             print("6) Remove List")
             print("7) Remove Reminder")
             print("0) Exit")
-
-
+            
+            
             let input = readLine() ?? "-1"
             let selection = Int(input)
             
             switch selection {
-            case 0:
-                return
-            case 1:
-                showToday()
-            case 2:
-                showScheduled()
-            case 3:
-                showMyLists()
-            case 4:
-                addReminder()
-            case 5:
-                addList()
-            case 6:
-                removeList()
-            case 7:
-                removeReminder()
-            default:
-                print("Option not found, try again...")
-            }
+                case 0:
+                    return
+                case 1:
+                    showReminders(scope: .today)
+                case 2:
+                    showReminders(scope: .scheduled)
+                case 3:
+                    showMyLists()
+                case 4:
+                    addReminder()
+                case 5:
+                    addList()
+                case 6:
+                    removeList()
+                case 7:
+                    removeReminder()
+                default:
+                    print("Option not found, try again...")
+                }
         }
     }
     
-    func showToday() {
-        for list in lists {
+    //Date.init() creates a date value initialized to the current date and time.
+    //TODO: Extract part of those functions that are similar, to another function. //using enum
+    
+    private enum Scope {
+        case scheduled
+        case today
+    }
+    
+    private mutating func showReminders(scope: Scope) {
+        for list in myLists {
             for reminder in list.reminders {
-                if reminder.date == Date.init() { //Date.init() creates a date value initialized to the current date and time.
-                    print(reminder)
+                switch scope {
+                case .scheduled:
+                    if let date = reminder.date, date >= Date() {
+                        print(reminder)
+                    }
+                case .today:
+                    print("yehowww...")
                 }
             }
         }
     }
     
-    func showScheduled() {
-        //TODO: Write logic.
-    }
     
     func showMyLists() {
-        //TODO: Write logic.
+        for list in myLists {
+            print(list)
+            //TODO: select list and show reminders inside the list...
+        }
     }
     
     func addReminder() {
-        //TODO: Write logic.
+        if let index = selectListIndex() {
+            print()
+            print()
+            print()
+            print()
+            let reminder: Reminder = Reminder(title: <#T##String#>, notes: <#T##String#>, date: <#T##Date?#>, priority: <#T##Priority#>)
+            myLists[index].reminders.append(reminder)
+        }
     }
     
-    func addList() {
-        //TODO: Write logic.
+    mutating func addList() {
+        print("Write the title:")
+        if let newTitle = readLine() {
+            let newList = List(title: newTitle)
+            myLists.append(newList)
+        } else {
+            print("It's not possible to read the title informed.")
+        }
     }
     
-    func removeList() {
+    mutating func removeList() {
+        if let index = selectListIndex() {
+            print(_: "Removed:", myLists.remove(at: index), separator: "\n", terminator: "\n")
+        } else {
+            print("It's not possible to find the list.")
+        }
+    }
+    
+    func editReminder() {
         //TODO: Write logic.
     }
     
     func removeReminder() {
         //TODO: Write logic.
+    }
+    
+    private func selectListIndex() -> Int? {
+        if myLists.isEmpty {
+            print("There's no list to show.")
+            return nil
+        } else {
+            var count = 0
+            for list in myLists {
+                print(count, list)
+                count += 1
+            }
+            print("Digit the number in the list's side to select it:")
+            let index = Int(readLine() ?? "-1") ?? -1
+            return (index >= 0 && index <= myLists.count) ? index : nil
+        }
     }
 }
 
