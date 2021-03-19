@@ -59,7 +59,7 @@ struct Main {
     //Date.init() creates a date value initialized to the current date and time.
     //TODO: Extract part of those functions that are similar, to another function.
     func showToday() {
-        for list in lists {
+        for list in myLists {
             for reminder in list.reminders {
                 if let _ = reminder.date {
                     let date = Date.init()
@@ -68,7 +68,7 @@ struct Main {
                     dateFormatter.dateStyle = .short
                     dateFormatter.timeStyle = .short
                     
-                    if reminder.ScheduledTime == dateFormatter.string(from: date){
+                    if reminder.scheduledTime == dateFormatter.string(from: date){
                         print()
                     }
                     
@@ -88,11 +88,22 @@ struct Main {
             for reminder in list.reminders {
                 switch scope {
                 case .scheduled:
-                    if let date = reminder.date, date >= Date() {
-                        print(reminder)
+                    if let _ = reminder.date {
+                        print(reminder.scheduledTime)
                     }
                 case .today:
-                    print("yehowww...")
+                    if let _ = reminder.date {
+                        let date = Date.init()
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateStyle = .short
+                        dateFormatter.timeStyle = .short
+                        
+                        if reminder.scheduledTime == dateFormatter.string(from: date){
+                            print(reminder.scheduledTime)
+                        }
+                        
+                    }
                 }
             }
         }
@@ -101,19 +112,18 @@ struct Main {
     
     func showMyLists() {
         for list in myLists {
-            print(list)
+            print(list.title)
             //TODO: select list and show reminders inside the list...
         }
     }
     
+    //terminar
     func addReminder() {
         if let index = selectListIndex() {
+            print("Inform the title:")
             print()
-            print()
-            print()
-            print()
-            let reminder: Reminder = Reminder(title: <#T##String#>, notes: <#T##String#>, date: <#T##Date?#>, priority: <#T##Priority#>)
-            myLists[index].reminders.append(reminder)
+            let reminder: Reminder = Reminder(title: <#T##String#>)
+            myLists[index].reminders.
         }
     }
     

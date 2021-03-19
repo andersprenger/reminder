@@ -27,8 +27,8 @@ enum Repeat {
 struct Reminder {
     var title: String
     var notes: String
-    var date:DateComponents? =  DateComponents()
-    var priority: Priority
+    var date: DateComponents?
+    var priority: Priority?
     //TODO: var repeat: Repeat
     //TODO: var location: String?
     
@@ -37,18 +37,18 @@ struct Reminder {
     
     mutating func setDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) {
         //TODO: a method that receives a String and converts it to date, than it sets self.date to it.
-        date?.calendar = .current
-        date?.year = year
-        date?.month = month
-        date?.day = day
-        date?.hour = hour
-        date?.minute = minute
-        date?.second = second
-        
-    
+        var temp = DateComponents()
+        temp.calendar = .current
+        temp.year = year
+        temp.month = month
+        temp.day = day
+        temp.hour = hour
+        temp.minute = minute
+        temp.second = second
+        date = temp
     }
     
-    var ScheduledTime: String{
+    var scheduledTime: String{
         
         return "\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
     }
