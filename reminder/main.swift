@@ -148,7 +148,7 @@ struct Main {
     }
     mutating func selectingReminderIndex(position: Int) -> Int{
         
-        var cont = 1
+        var cont = 0
         var remindersChoice:String = ""
         for tasks in myLists[position].reminders{
             
