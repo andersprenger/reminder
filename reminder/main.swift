@@ -86,7 +86,10 @@ struct Main {
     }
     
     func addReminder() {
-        //TODO: Write logic.
+        if let index = selectListIndex() {
+            var reminder: Reminder = Reminder(title: <#T##String#>, notes: <#T##String#>, date: <#T##Date?#>, priority: <#T##Priority#>)
+            lists[index].reminders.append(reminder)
+        }
     }
     
     func addList() {
@@ -97,19 +100,23 @@ struct Main {
         //TODO: Write logic.
     }
     
+    func editReminder() {
+        //TODO: Write logic.
+    }
+    
     func removeReminder() {
         //TODO: Write logic.
     }
     
-    private func selectListIndex() -> Int {
+    private func selectListIndex() -> Int? {
         var count = 0
         for list in lists {
             print(count, list)
             count += 1
         }
-        print(<#T##items: Any...##Any#>)
+        print("Select a list of reminders by its number:")
         let index = Int(readLine() ?? "0") ?? 0
-        index >= 0 && index <= lists.count ? index : nil
+        return index >= 0 && index <= lists.count ? index : nil
     }
 }
 
