@@ -28,8 +28,8 @@ struct Main {
             print("6) Remove List")
             print("7) Remove Reminder")
             print("0) Exit")
-
-
+            
+            
             let input = readLine() ?? "-1"
             let selection = Int(input)
             
@@ -81,7 +81,7 @@ struct Main {
     func showMyLists() {
         for list in myLists {
             print(list)
-        //TODO: select list and show reminders inside the list...
+            //TODO: select list and show reminders inside the list...
         }
     }
     
@@ -106,8 +106,10 @@ struct Main {
         }
     }
     
-    func removeList() {
-        //TODO: Write logic.
+    mutating func removeList() {
+        if let index = selectListIndex() {
+            print(_: "Removed:", myLists.remove(at: index), separator: "\n", terminator: "\n")
+        }
     }
     
     func editReminder() {
@@ -119,14 +121,19 @@ struct Main {
     }
     
     private func selectListIndex() -> Int? {
-        var count = 0
-        for list in myLists {
-            print(count, list)
-            count += 1
+        if myLists.isEmpty {
+            print("There's no list to show.")
+            return nil
+        } else {
+            var count = 0
+            for list in myLists {
+                print(count, list)
+                count += 1
+            }
+            print("Digit the number in the list's side to select it:")
+            let index = Int(readLine() ?? "-1") ?? -1
+            return (index >= 0 && index <= myLists.count) ? index : nil
         }
-        print("Select a list of reminders by its number:")
-        let index = Int(readLine() ?? "0") ?? 0
-        return index >= 0 && index <= myLists.count ? index : nil
     }
 }
 
