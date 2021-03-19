@@ -8,11 +8,11 @@
 import Foundation
 
 struct Main {
-    var lists: Array<List>
+    var myLists: [List]
     var local: Locale
     
     init() {
-        lists = Array<List>()
+        myLists = []
         local = Locale.current
     }
     
@@ -57,11 +57,11 @@ struct Main {
     }
     
     //Date.init() creates a date value initialized to the current date and time.
-    //TODO: Extract part of those functions that are similar, to another function.
+    //TODO: Extract part of those functions that are similar, to another function. //using enum
     func showToday() {
-        for list in lists {
+        for list in myLists {
             for reminder in list.reminders {
-                if let date = reminder.date, date == Date.init() {
+                if let date = reminder.date, date == Date() {//como fazer ele ignorar a hora, datecomponent
                     print(reminder)
                 }
             }
@@ -69,9 +69,9 @@ struct Main {
     }
     
     func showScheduled() {
-        for list in lists {
+        for list in myLists {
             for reminder in list.reminders {
-                if let date = reminder.date, date >= Date.init() {
+                if let date = reminder.date, date >= Date() {
                     print(reminder)
                 }
             }
@@ -79,7 +79,7 @@ struct Main {
     }
     
     func showMyLists() {
-        for list in lists {
+        for list in myLists {
             print(list)
         //TODO: select list and show reminders inside the list...
         }
@@ -87,13 +87,23 @@ struct Main {
     
     func addReminder() {
         if let index = selectListIndex() {
-            var reminder: Reminder = Reminder(title: <#T##String#>, notes: <#T##String#>, date: <#T##Date?#>, priority: <#T##Priority#>)
-            lists[index].reminders.append(reminder)
+            print()
+            print()
+            print()
+            print()
+            let reminder: Reminder = Reminder(title: <#T##String#>, notes: <#T##String#>, date: <#T##Date?#>, priority: <#T##Priority#>)
+            myLists[index].reminders.append(reminder)
         }
     }
     
-    func addList() {
-        //TODO: Write logic.
+    mutating func addList() {
+        print("Write the title:")
+        if var newTitle = readLine() {
+            var newList = List(title: newTitle)
+            myLists.append(newList)
+        } else {
+            print("It's not possible to read the title informed.")
+        }
     }
     
     func removeList() {
@@ -110,13 +120,13 @@ struct Main {
     
     private func selectListIndex() -> Int? {
         var count = 0
-        for list in lists {
+        for list in myLists {
             print(count, list)
             count += 1
         }
         print("Select a list of reminders by its number:")
         let index = Int(readLine() ?? "0") ?? 0
-        return index >= 0 && index <= lists.count ? index : nil
+        return index >= 0 && index <= myLists.count ? index : nil
     }
 }
 
