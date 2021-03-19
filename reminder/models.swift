@@ -13,6 +13,8 @@ enum Priority {
     case high
 }
 
+
+
 // MARK: --What do you think of this enum?
 enum Repeat {
     case not
@@ -25,14 +27,30 @@ enum Repeat {
 struct Reminder {
     var title: String
     var notes: String
-    var date: Date?
+    var date:DateComponents? =  DateComponents()
     var priority: Priority
     //TODO: var repeat: Repeat
     //TODO: var location: String?
     
-    func setDate(_: String) -> Bool {
+    
+    
+    
+    mutating func setDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) {
         //TODO: a method that receives a String and converts it to date, than it sets self.date to it.
-        return true
+        date?.calendar = .current
+        date?.year = year
+        date?.month = month
+        date?.day = day
+        date?.hour = hour
+        date?.minute = minute
+        date?.second = second
+        
+    
+    }
+    
+    var ScheduledTime: String{
+        
+        return "\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
     }
     
     func toString() -> String {
@@ -43,6 +61,7 @@ struct Reminder {
 class List {
     var title: String
     var reminders: Array<Reminder>
+    
     
     init(title: String) {
         self.title = title

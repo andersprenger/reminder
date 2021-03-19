@@ -61,8 +61,17 @@ struct Main {
     func showToday() {
         for list in lists {
             for reminder in list.reminders {
-                if let date = reminder.date, date == Date.init() {
-                    print(reminder)
+                if let _ = reminder.date {
+                    let date = Date.init()
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .short
+                    
+                    if reminder.ScheduledTime == dateFormatter.string(from: date){
+                        print()
+                    }
+                    
                 }
             }
         }
