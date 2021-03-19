@@ -16,7 +16,7 @@ struct Main {
         local = Locale.current
     }
     
-    func main() {
+    mutating func main() {
         print("Reminder")
         while true {
             print("Digit an option:")
@@ -34,45 +34,45 @@ struct Main {
             let selection = Int(input)
             
             switch selection {
-            case 0:
-                return
-            case 1:
-                showToday()
-            case 2:
-                showScheduled()
-            case 3:
-                showMyLists()
-            case 4:
-                addReminder()
-            case 5:
-                addList()
-            case 6:
-                removeList()
-            case 7:
-                removeReminder()
-            default:
-                print("Option not found, try again...")
+                case 0:
+                    return
+                case 1:
+                    showToday()
+                case 2:
+                    showScheduled()
+                case 3:
+                    showMyLists()
+                case 4:
+                    addReminder()
+                case 5:
+                    addList()
+                case 6:
+                    removeList()
+                case 7:
+                    removeReminder()
+                default:
+                    print("Option not found, try again...")
             }
         }
     }
     
     //Date.init() creates a date value initialized to the current date and time.
     //TODO: Extract part of those functions that are similar, to another function. //using enum
-    func showToday() {
-        for list in myLists {
-            for reminder in list.reminders {
-                if let date = reminder.date, date == Date() {//como fazer ele ignorar a hora, datecomponent
-                    print(reminder)
-                }
-            }
-        }
+    
+    private enum Scope {
+        case scheduled
+        case today
     }
     
-    func showScheduled() {
+    private func showReminders(scope: Scope) {
         for list in myLists {
             for reminder in list.reminders {
-                if let date = reminder.date, date >= Date() {
-                    print(reminder)
+                switch scope {
+                case: .scheduled:
+                    if let date = reminder.date, date >= Date() {
+                        print(reminder)
+                case: .today
+                    //teste do today
                 }
             }
         }
@@ -98,8 +98,8 @@ struct Main {
     
     mutating func addList() {
         print("Write the title:")
-        if var newTitle = readLine() {
-            var newList = List(title: newTitle)
+        if let newTitle = readLine() {
+            let newList = List(title: newTitle)
             myLists.append(newList)
         } else {
             print("It's not possible to read the title informed.")
