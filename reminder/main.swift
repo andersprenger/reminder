@@ -121,9 +121,11 @@ struct Main {
     func addReminder() {
         if let index = selectListIndex() {
             print("Inform the title:")
-            print()
-            let reminder: Reminder = Reminder(title: <#T##String#>)
-            myLists[index].reminders.
+            let title = readLine() ?? "_DEFAULT_TITLE_"
+            print("Inform the description:")
+            let note = readLine() ?? ""
+            myLists[index].reminders.append(Reminder(title: title, notes: note, date: nil, priority: nil))
+            print("Done!")
         }
     }
     
