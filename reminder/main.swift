@@ -56,10 +56,12 @@ struct Main {
         }
     }
     
+    //Date.init() creates a date value initialized to the current date and time.
+    //TODO: Extract part of those functions that are similar, to another function.
     func showToday() {
         for list in lists {
             for reminder in list.reminders {
-                if reminder.date == Date.init() { //Date.init() creates a date value initialized to the current date and time.
+                if let date = reminder.date, date == Date.init() {
                     print(reminder)
                 }
             }
@@ -67,11 +69,20 @@ struct Main {
     }
     
     func showScheduled() {
-        //TODO: Write logic.
+        for list in lists {
+            for reminder in list.reminders {
+                if let date = reminder.date, date >= Date.init() {
+                    print(reminder)
+                }
+            }
+        }
     }
     
     func showMyLists() {
-        //TODO: Write logic.
+        for list in lists {
+            print(list)
+        //TODO: select list and show reminders inside the list...
+        }
     }
     
     func addReminder() {
@@ -88,6 +99,17 @@ struct Main {
     
     func removeReminder() {
         //TODO: Write logic.
+    }
+    
+    private func selectListIndex() -> Int {
+        var count = 0
+        for list in lists {
+            print(count, list)
+            count += 1
+        }
+        print(<#T##items: Any...##Any#>)
+        let index = Int(readLine() ?? "0") ?? 0
+        index >= 0 && index <= lists.count ? index : nil
     }
 }
 
