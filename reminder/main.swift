@@ -37,9 +37,9 @@ struct Main {
                 case 0:
                     return
                 case 1:
-                    showToday()
+                    showReminders(scope: .today)
                 case 2:
-                    showScheduled()
+                    showReminders(scope: .scheduled)
                 case 3:
                     showMyLists()
                 case 4:
@@ -52,7 +52,7 @@ struct Main {
                     removeReminder()
                 default:
                     print("Option not found, try again...")
-            }
+                }
         }
     }
     
@@ -64,19 +64,21 @@ struct Main {
         case today
     }
     
-    private func showReminders(scope: Scope) {
+    private mutating func showReminders(scope: Scope) {
         for list in myLists {
             for reminder in list.reminders {
                 switch scope {
-                case: .scheduled:
+                case .scheduled:
                     if let date = reminder.date, date >= Date() {
                         print(reminder)
-                case: .today
-                    //teste do today
+                    }
+                case .today:
+                    print("yehowww...")
                 }
             }
         }
     }
+    
     
     func showMyLists() {
         for list in myLists {
@@ -109,6 +111,8 @@ struct Main {
     mutating func removeList() {
         if let index = selectListIndex() {
             print(_: "Removed:", myLists.remove(at: index), separator: "\n", terminator: "\n")
+        } else {
+            print("It's not possible to find the list.")
         }
     }
     
