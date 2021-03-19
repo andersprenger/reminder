@@ -60,15 +60,14 @@ struct Reminder {
 
 class List {
     var title: String
-    var reminders: Array<Reminder>
+    var reminders: [Reminder]
+    var whoami: String {
+        return ""//TODO: this
+    }
     
     
     init(title: String) {
         self.title = title
-        reminders = Array<Reminder>()
-    }
-    
-    func toString() -> String {
-        return title
+        reminders = []
     }
 }
