@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum Priority {
-    case low
-    case medium
-    case high
-}
+//enum Priority {
+//    case low
+//    case medium
+//    case high
+//}
 
 
 
@@ -28,14 +28,14 @@ struct Reminder {
     var title: String
     var notes: String
     var date: DateComponents?
-    var priority: Priority?
+//    var priority: Priority?
     //TODO: var repeat: Repeat
     //TODO: var location: String?
     
     
     
     
-    mutating func setDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) {
+    mutating func setDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
         //TODO: a method that receives a String and converts it to date, than it sets self.date to it.
         var temp = DateComponents()
         temp.calendar = .current
@@ -44,7 +44,6 @@ struct Reminder {
         temp.day = day
         temp.hour = hour
         temp.minute = minute
-        temp.second = second
         date = temp
     }
     
@@ -53,9 +52,9 @@ struct Reminder {
         return "\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
     }
     
-    func toString() -> String {
-        return title //TODO: improve this...
-    }
+//    func toString() -> String {
+//        return title //TODO: improve this...
+//    }
 }
 
 class List {

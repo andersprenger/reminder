@@ -121,9 +121,11 @@ struct Main {
     func addReminder() {
         if let index = selectListIndex() {
             print("Inform the title:")
-            print()
-            let reminder: Reminder = Reminder(title: <#T##String#>)
-            myLists[index].reminders.
+            let title = readLine() ?? "_DEFAULTTITLE"
+            print("Inform the description:")
+            let note = readLine() ?? ""
+            myLists[index].reminders.append(Reminder(title: title, notes: note, date: nil, priority: nil))
+            print("Done!")
         }
     }
     
@@ -144,9 +146,91 @@ struct Main {
             print("It's not possible to find the list.")
         }
     }
+    mutating func selectingReminderIndex(position: Int) -> Int{
+        
+        var cont = 1
+        let remindersChoice:String
+        for tasks in myLists[position].reminders{
+            
+            print("Which reminders you want to edit?")
+            print("\(cont): \(tasks)")
+            remindersChoice = readLine() ?? ""
+            cont += 1
+        }
+        let indexReminders = Int(remindersChoice)
+        return indexReminders ?? 0
+    }
     
-    func editReminder() {
+    mutating func editReminder() {
         //TODO: Write logic.
+        if let index = selectListIndex(){
+            let reminderPosition = selectingReminderIndex(position: index)
+            print("1) Change title")
+            print("2) Change note")
+            print("3) Change date or time")
+//            print("4) Change priority")
+//     Todo:       print("5) Change repeat")
+//     Todo:       print("6) Change location")
+            let input = readLine() ?? ""
+            let choice = Int(input)
+            
+            switch choice {
+                case 0:
+                    return
+                case 1:
+                    print("Write the title: ")
+                    let name = readLine() ?? ""
+                    
+                    myLists[index].reminders[reminderPosition].title = name
+                    
+                case 2:
+                    print("Write the description")
+                    let description = readLine() ?? ""
+                    
+                    myLists[index].reminders[reminderPosition].notes = description
+                case 3:
+                    
+                    print("Print day!")
+                    let changedDay = readLine() ?? ""
+                    let intDay = Int(changedDay) ?? 0
+                    
+                    print("Print month!")
+                    let changedMonth = readLine() ?? ""
+                    let intMonth = Int(changedMonth) ?? 0
+                    
+                    print("Print year!")
+                    let changedYear = readLine() ?? ""
+                    let intYear = Int(changedYear) ?? 0
+                    
+                    print("Do you want to edit time?")
+                    print("1- Yes")
+                    print("2- No")
+                    let changedTime = readLine() ?? ""
+                    let intTime = Int(changedTime) ?? 0
+                    
+                    switch intTime {
+                        case 1:
+                            print("Print hour!")
+                            let changedHour = readLine() ?? ""
+                            let intHour = Int(changedHour) ?? 0
+                            
+                            print("Print minute!")
+                            let changedMinute = readLine() ?? ""
+                            let intMinute = Int(changedMinute) ?? 0
+                            
+                            myLists[index].reminders[reminderPosition].setDate(year: intYear, month: intMonth, day: intDay, hour: intHour, minute: intMinute)
+                            
+                        case 2:
+                            myLists[index].reminders[reminderPosition].setDate(year: intYear, month: intMonth, day: intDay, hour: 0, minute: 0)
+                            
+                        default:
+                            print("Option not found, try again...")
+                    }
+                    
+                default:
+                    print("Option not found, try again...")
+                }
+        }
     }
     
     func removeReminder() {
