@@ -26,7 +26,7 @@ struct Main {
             print("4) Add List")
             print("5) Add Reminder")
             print("6) Remove List")
-            print("7) Remove Reminder")
+            print("7) edit Reminder")
             print("0) Exit")
             
             
@@ -43,13 +43,13 @@ struct Main {
                 case 3:
                     showMyLists()
                 case 4:
-                    addReminder()
-                case 5:
                     addList()
+                case 5:
+                    addReminder()
                 case 6:
                     removeList()
                 case 7:
-                    removeReminder()
+                    editReminder()
                 default:
                     print("Option not found, try again...")
                 }
@@ -124,7 +124,7 @@ struct Main {
             let title = readLine() ?? "_DEFAULTTITLE"
             print("Inform the description:")
             let note = readLine() ?? ""
-            myLists[index].reminders.append(Reminder(title: title, notes: note, date: nil, priority: nil))
+            myLists[index].reminders.append(Reminder(title: title, notes: note, date: nil))
             print("Done!")
         }
     }
@@ -149,7 +149,7 @@ struct Main {
     mutating func selectingReminderIndex(position: Int) -> Int{
         
         var cont = 1
-        let remindersChoice:String
+        var remindersChoice:String = ""
         for tasks in myLists[position].reminders{
             
             print("Which reminders you want to edit?")
