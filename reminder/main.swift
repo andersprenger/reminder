@@ -102,6 +102,11 @@ struct Main {
         }
     }
     
+    //MARK: --TODO: WORK IN PROGRESS... finish this!
+    func removeReminder() {
+        //TODO: Write logic.
+    }
+    
     mutating func addList() {
         print("Write the list's title:")
         if let newTitle = readLine() {
@@ -175,50 +180,37 @@ struct Main {
     private func changeReminderDate(reminder index: (ofList: Int, ofReminder: Int)) {
         print("Write reminder's new day, in format DD:")
         let changedDay = readLine() ?? ""
-        let intDay = Int(changedDay) ?? 0
         
         print("Write reminder's new month, in format MM:")
         let changedMonth = readLine() ?? ""
-        let intMonth = Int(changedMonth) ?? 0
         
         print("Write reminder's new year, in format ??:")
         let changedYear = readLine() ?? ""
-        let intYear = Int(changedYear) ?? 0
+        
+        if let intDay = Int(changedDay), let intMonth = Int(changedMonth), let intYear = Int(changedYear) {
+            myLists[index.ofList].reminders[index.ofReminder].setDate(year: intYear, month: intMonth, day: intDay)
+        } else {
+            print("nao deu...")
+        }
     }
     
     //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderTime(reminder index: (ofList: Int, ofReminder: Int)) {
-        let changedTime = readLine() ?? ""
-        let intTime = Int(changedTime) ?? 0
+        print("Print hour!")
+        let changedHour = readLine() ?? ""
         
-        switch intTime {
-        case 1:
-            print("Print hour!")
-            let changedHour = readLine() ?? ""
-            let intHour = Int(changedHour) ?? 0
-            
-            print("Print minute!")
-            let changedMinute = readLine() ?? ""
-            let intMinute = Int(changedMinute) ?? 0
-            
-            //myLists[index.ofList].reminders[index.ofReminder].setDate
-            
-        case 2:
-            print("dont complain...")
-            //myLists[index.ofList].reminders[index.ofReminder].setDate
-            
-        default:
-            print("Option not found, try again...")
+        print("Print minute!")
+        let changedMinute = readLine() ?? ""
+        
+        if let intHour = Int(changedHour), let intMinute = Int(changedMinute) {
+            myLists[index.ofList].reminders[index.ofReminder].setTime(hour: intHour, minute: intMinute)
+        } else {
+            print("nao deu")
         }
     }
     
     //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderPriority(reminder index: (ofList: Int, ofReminder: Int)) {
-        //TODO: Write logic.
-    }
-    
-    //MARK: --TODO: WORK IN PROGRESS... finish this!
-    func removeReminder() {
         //TODO: Write logic.
     }
     
@@ -234,7 +226,7 @@ struct Main {
             print("Digit the number in the reminder's side to select it:")
             var informedIndex = Int(readLine() ?? "-1") ?? -1
             informedIndex -= 1 //MARK: --SUBTRACTING 1 TO MATCH WITH THE INDEX.
-            return (informedIndex >= 0 && informedIndex <= myLists[index].reminders.count) ? informedIndex : nil
+            return (informedIndex >= 0 && informedIndex < myLists[index].reminders.count) ? informedIndex : nil
         }
     }
     
@@ -245,13 +237,13 @@ struct Main {
         } else {
             var count = 1 //MARK: --START WITH 1, BUT ARRAYS BEGIN WITH 0. THEN, WILL BE SUBTRACTED 1 BELLOW TO MATCH TO THE INDEX.
             for list in myLists {
-                print(count, list)
+                print(count, list.title)
                 count += 1
             }
             print("Digit the number in the list's side to select it:")
             var informedIndex = Int(readLine() ?? "-1") ?? -1
             informedIndex -= 1 //MARK: --SUBTRACTING 1 TO MATCH WITH THE INDEX.
-            return (informedIndex >= 0 && informedIndex <= myLists.count) ? informedIndex : nil
+            return (informedIndex >= 0 && informedIndex < myLists.count) ? informedIndex : nil
         }
     }
 }
