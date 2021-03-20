@@ -97,7 +97,7 @@ struct Main {
         if let index = selectListIndex() {
             print("Write the reminder's title:")
             let title = readLine() ?? "_DEFAULT_TITLE_"
-            myLists[index].reminders.append(Reminder(title: title, notes: nil, date: nil))
+            myLists[index].reminders.append(Reminder(title: title, notes: nil, date: nil, priority: nil))
             print("Remind created!")
         }
     }
@@ -171,7 +171,7 @@ struct Main {
         }
     }
     
-    //TODO: finish this...
+    //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderDate(reminder index: (ofList: Int, ofReminder: Int)) {
         print("Write reminder's new day, in format DD:")
         let changedDay = readLine() ?? ""
@@ -186,7 +186,7 @@ struct Main {
         let intYear = Int(changedYear) ?? 0
     }
     
-    //TODO: finish this...
+    //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderTime(reminder index: (ofList: Int, ofReminder: Int)) {
         let changedTime = readLine() ?? ""
         let intTime = Int(changedTime) ?? 0
@@ -212,10 +212,12 @@ struct Main {
         }
     }
     
+    //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderPriority(reminder index: (ofList: Int, ofReminder: Int)) {
         //TODO: Write logic.
     }
     
+    //MARK: --TODO: WORK IN PROGRESS... finish this!
     func removeReminder() {
         //TODO: Write logic.
     }
