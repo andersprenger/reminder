@@ -90,6 +90,9 @@ struct Main {
     func showMyLists() {
         for list in myLists {
             print(list.title)
+            for reminder in list.reminders {
+                print(reminder.title)
+            }
         }
     }
     
@@ -98,7 +101,7 @@ struct Main {
             print("Write the reminder's title:")
             let title = readLine() ?? "_DEFAULT_TITLE_"
             myLists[index].reminders.append(Reminder(title: title, notes: nil, date: nil, priority: nil))
-            print("Remind created!")
+            print("Reminder created!")
         }
     }
     
@@ -127,34 +130,40 @@ struct Main {
     }
     
     mutating func editReminder() {
-        if let listIndex = selectListIndex(), let reminderIndex = selectReminderIndex(list: listIndex) {
-            let reminderPosition: (Int, Int) = (listIndex, reminderIndex)
-            print("1) Change title")
-            print("2) Change note")
-            print("3) Change date")
-            print("4) Change time")
-            print("5) Change priority")
-            print("0) Exit")
-            
-            let input = readLine() ?? "-1"
-            let choice = Int(input)
-            
-            switch choice {
-            case 0:
-                return
-            case 1:
-                changeReminderTitle(reminder: reminderPosition)
-            case 2:
-                changeReminderNote(reminder: reminderPosition)
-            case 3:
-                changeReminderDate(reminder: reminderPosition)
-            case 4:
-                changeReminderTime(reminder: reminderPosition)
-            case 5:
-                changeReminderPriority(reminder: reminderPosition)
-            default:
-                print("Option not found, try again...")
+        if let listIndex = selectListIndex(){
+            if let reminderIndex = selectReminderIndex(list: listIndex) {
+                let reminderPosition: (Int, Int) = (listIndex, reminderIndex)
+                print("1) Change title")
+                print("2) Change note")
+                print("3) Change date")
+                print("4) Change time")
+                print("5) Change priority")
+                print("0) Exit")
+                
+                let input = readLine() ?? "-1"
+                let choice = Int(input)
+                
+                switch choice {
+                case 0:
+                    return
+                case 1:
+                    changeReminderTitle(reminder: reminderPosition)
+                case 2:
+                    changeReminderNote(reminder: reminderPosition)
+                case 3:
+                    changeReminderDate(reminder: reminderPosition)
+                case 4:
+                    changeReminderTime(reminder: reminderPosition)
+                case 5:
+                    changeReminderPriority(reminder: reminderPosition)
+                default:
+                    print("Option not found, try again...")
+                }
+            } else {
+                print("nao leu select reminder")
             }
+        } else {
+            print("nao leu select list")
         }
     }
     
@@ -190,7 +199,7 @@ struct Main {
         if let intDay = Int(changedDay), let intMonth = Int(changedMonth), let intYear = Int(changedYear) {
             myLists[index.ofList].reminders[index.ofReminder].setDate(year: intYear, month: intMonth, day: intDay)
         } else {
-            print("nao deu...")
+            print("nao deu crm...")
         }
     }
     
@@ -215,7 +224,7 @@ struct Main {
     }
     
     private func selectReminderIndex(list index: Int) -> Int? {
-        if myLists.isEmpty || index < myLists.count || myLists[index].reminders.isEmpty { //MARK: --THIS ORDER MATTERS!
+        if myLists.isEmpty || index >= myLists.count || myLists[index].reminders.isEmpty { //MARK: --THIS ORDER MATTERS!
             return nil
         } else {
             var count = 1 //MARK: --START WITH 1, BUT ARRAYS BEGIN WITH 0. THEN, WILL BE SUBTRACTED 1 BELLOW TO MATCH TO THE INDEX.
