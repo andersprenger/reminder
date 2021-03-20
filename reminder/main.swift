@@ -60,7 +60,7 @@ struct Main {
     }
     
     //TODO: Understand what is happening with dateFormater...
-    private mutating func showReminders(scope: Scope) {
+    private func showReminders(scope: Scope) {
         for list in myLists {
             for reminder in list.reminders {
                 switch scope {
@@ -172,15 +172,15 @@ struct Main {
     }
     
     private func changeReminderDate(reminder index: (ofList: Int, ofReminder: Int)) {
-        print("Write day, in format DD:")
+        print("Write reminder's new day, in format DD:")
         let changedDay = readLine() ?? ""
         let intDay = Int(changedDay) ?? 0
         
-        print("Print month!")
+        print("Write reminder's new day, in format DD:")
         let changedMonth = readLine() ?? ""
         let intMonth = Int(changedMonth) ?? 0
         
-        print("Print year!")
+        print("Write reminder's new day, in format DD:")
         let changedYear = readLine() ?? ""
         let intYear = Int(changedYear) ?? 0
     }
@@ -210,7 +210,7 @@ struct Main {
     }
     
     private func changeReminderPriority(reminder index: (ofList: Int, ofReminder: Int)) {
-        //TODO: this
+        //TODO: Write logic.
     }
     
     func removeReminder() {
