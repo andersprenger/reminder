@@ -94,7 +94,13 @@ struct Main {
             for list in myLists {
                 print("List: ", list.title)
                 for reminder in list.reminders {
-                    print(reminder.title)
+                    print(_: "-", terminator: "")
+                    print(reminder.title, "at:", terminator: "")
+                    if let _ = reminder.date {
+                        print(reminder.scheduledTime)
+                    } else {
+                        print("")
+                    }
                 }
                 print("")
             }
@@ -143,28 +149,30 @@ struct Main {
         if let listIndex = selectListIndex(){
             if let reminderIndex = selectReminderIndex(list: listIndex) {
                 let reminderPosition: (Int, Int) = (listIndex, reminderIndex)
-                print("1) Change title")
-                print("2) Change note")
-                print("3) Change date")
-                print("4) Change time")
-                print("0) Exit")
-                
-                let input = readLine() ?? "-1"
-                let choice = Int(input)
-                
-                switch choice {
-                case 0:
-                    return
-                case 1:
-                    changeReminderTitle(reminder: reminderPosition)
-                case 2:
-                    changeReminderNote(reminder: reminderPosition)
-                case 3:
-                    changeReminderDate(reminder: reminderPosition)
-                case 4:
-                    changeReminderTime(reminder: reminderPosition)
-                default:
-                    print("Option not found, try again...")
+                while true {
+                    print("1) Change title")
+                    print("2) Change note")
+                    print("3) Change date")
+                    print("4) Change time")
+                    print("0) Exit")
+                    
+                    let input = readLine() ?? "-1"
+                    let choice = Int(input)
+                    
+                    switch choice {
+                        case 0:
+                            return
+                        case 1:
+                            changeReminderTitle(reminder: reminderPosition)
+                        case 2:
+                            changeReminderNote(reminder: reminderPosition)
+                        case 3:
+                            changeReminderDate(reminder: reminderPosition)
+                        case 4:
+                            changeReminderTime(reminder: reminderPosition)
+                        default:
+                            print("Option not found, try again...")
+                    }
                 }
             } else {
                 print("It's not possible to find this reminder.")
