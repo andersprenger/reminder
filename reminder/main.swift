@@ -18,14 +18,13 @@ struct Main {
         print("Reminder")
         while true {
             print("Digit an option:")
-            print("1) Today")
-            print("2) Scheduled")
-            print("3) My Lists")
-            print("4) Add List")
-            print("5) Add Reminder")
-            print("6) Remove List")
-            print("7) Remove Reminder")
-            print("8) Edit Reminder")
+            print("1) Scheduled")
+            print("2) My Lists")
+            print("3) Add List")
+            print("4) Add Reminder")
+            print("5) Remove List")
+            print("6) Remove Reminder")
+            print("7) Edit Reminder")
             print("0) Exit")
             
             
@@ -36,20 +35,18 @@ struct Main {
             case 0:
                 return
             case 1:
-                showReminders(scope: .today)
-            case 2:
                 showReminders(scope: .scheduled)
-            case 3:
+            case 2:
                 showMyLists()
-            case 4:
+            case 3:
                 addList()
-            case 5:
+            case 4:
                 addReminder()
-            case 6:
+            case 5:
                 removeList()
-            case 7:
+            case 6:
                 removeReminder()
-            case 8:
+            case 7:
                 editReminder()
             default:
                 print("Option not found, try again...")
@@ -69,9 +66,10 @@ struct Main {
                 switch scope {
                 case .scheduled:
                     if let _ = reminder.date {
-                        print(reminder.scheduledTime)
+                        print(reminder.title, "-", reminder.scheduledTime)
                     }
                 case .today:
+                    //TODO: make it work
                     if let _ = reminder.date {
                         let date = Date.init()
                         
@@ -90,12 +88,16 @@ struct Main {
     
     
     func showMyLists() {
-        for list in myLists {
-            print("List: ", list.title)
-            for reminder in list.reminders {
-                print(reminder.title)
+        if myLists.isEmpty {
+            print("There's no list to show.")
+        } else {
+            for list in myLists {
+                print("List: ", list.title)
+                for reminder in list.reminders {
+                    print(reminder.title)
+                }
+                print("")
             }
-            print("")
         }
     }
     
