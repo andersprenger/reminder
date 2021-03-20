@@ -171,20 +171,22 @@ struct Main {
         }
     }
     
+    //TODO: finish this...
     private func changeReminderDate(reminder index: (ofList: Int, ofReminder: Int)) {
         print("Write reminder's new day, in format DD:")
         let changedDay = readLine() ?? ""
         let intDay = Int(changedDay) ?? 0
         
-        print("Write reminder's new day, in format DD:")
+        print("Write reminder's new month, in format MM:")
         let changedMonth = readLine() ?? ""
         let intMonth = Int(changedMonth) ?? 0
         
-        print("Write reminder's new day, in format DD:")
+        print("Write reminder's new year, in format ??:")
         let changedYear = readLine() ?? ""
         let intYear = Int(changedYear) ?? 0
     }
     
+    //TODO: finish this...
     private func changeReminderTime(reminder index: (ofList: Int, ofReminder: Int)) {
         let changedTime = readLine() ?? ""
         let intTime = Int(changedTime) ?? 0
@@ -199,10 +201,11 @@ struct Main {
             let changedMinute = readLine() ?? ""
             let intMinute = Int(changedMinute) ?? 0
             
-            myLists[index.ofList].reminders[index.ofReminder].setDate
+            //myLists[index.ofList].reminders[index.ofReminder].setDate
             
         case 2:
-            myLists[index.ofList].reminders[index.ofReminder].setDate
+            print("dont complain...")
+            //myLists[index.ofList].reminders[index.ofReminder].setDate
             
         default:
             print("Option not found, try again...")
