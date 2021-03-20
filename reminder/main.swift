@@ -95,9 +95,9 @@ struct Main {
                 print("List: ", list.title)
                 for reminder in list.reminders {
                     print(_: "-", terminator: "")
-                    print(reminder.title, "at: ", terminator: "")
+                    print(reminder.title, terminator: "")
                     if let _ = reminder.date {
-                        print(reminder.scheduledTime)
+                        print("at: ", reminder.scheduledTime)
                     } else {
                         print("")
                     }
@@ -142,7 +142,7 @@ struct Main {
     mutating func removeList() {
         if let index = selectListIndex() {
             let removedList = myLists.remove(at: index)
-            print(_: "Reminder removed:", removedList.title)
+            print(_: "List removed:", removedList.title)
         } else {
             print("It's not possible to find the list.")
         }
