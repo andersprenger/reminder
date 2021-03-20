@@ -193,7 +193,7 @@ struct Main {
         print("Write reminder's new month, in format MM:")
         let changedMonth = readLine() ?? ""
         
-        print("Write reminder's new year, in format ??:")
+        print("Write reminder's new year, in format YY:")
         let changedYear = readLine() ?? ""
         
         if let intDay = Int(changedDay), let intMonth = Int(changedMonth), let intYear = Int(changedYear) {

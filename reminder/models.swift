@@ -19,7 +19,48 @@ struct Reminder {
     var date: DateComponents?
     var priority: Priority?
     var scheduledTime: String {
-        "\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
+        //"\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
+        var str: String = ""
+        if let tempDay = date?.day, let tempMonth = date?.month, let tempYear = date?.year {
+            if tempDay < 10{
+                str += "0"
+                str += String(tempDay)
+            } else {
+                str += String(tempDay)
+            }
+            str += "/"
+            if tempMonth < 10{
+                str += "0"
+                str += String(tempMonth)
+            } else {
+                str += String(tempMonth)
+            }
+            str += "/"
+            if tempYear < 10{
+                str += "0"
+                str += String(tempYear)
+            } else {
+                str += String(tempYear)
+            }
+            str += " "
+        }
+        if let tempHour = date?.hour, let tempMinute = date?.minute {
+            if tempHour < 10{
+                str += "0"
+                str += String(tempHour)
+            } else {
+                str += String(tempHour)
+            }
+            str += ":"
+            if tempMinute < 10{
+                str += "0"
+                str += String(tempMinute)
+            } else {
+                str += String(tempMinute)
+            }
+        }
+        
+        return str
     }
     
     mutating func setDate(year: Int, month: Int, day: Int) {
