@@ -97,7 +97,7 @@ struct Main {
                     print(_: "-", terminator: "")
                     print(reminder.title)
                     if let _ = reminder.date {
-                        print("- ", reminder.scheduledTime)
+                        print("-", reminder.scheduledTime)
                     } else {
                         print("")
                     }
