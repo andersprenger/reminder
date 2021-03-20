@@ -94,7 +94,16 @@ struct Main {
             for list in myLists {
                 print("List: ", list.title)
                 for reminder in list.reminders {
+                    print(_: "-", terminator: "")
                     print(reminder.title)
+                    if let _ = reminder.date {
+                        print("-", reminder.scheduledTime)
+                    } else {
+                        print("")
+                    }
+                    if let notes = reminder.notes {
+                        print("Notes: ", notes)
+                    }
                 }
                 print("")
             }
@@ -133,7 +142,7 @@ struct Main {
     mutating func removeList() {
         if let index = selectListIndex() {
             let removedList = myLists.remove(at: index)
-            print(_: "Reminder removed:", removedList.title)
+            print(_: "List removed:", removedList.title)
         } else {
             print("It's not possible to find the list.")
         }
@@ -143,28 +152,30 @@ struct Main {
         if let listIndex = selectListIndex(){
             if let reminderIndex = selectReminderIndex(list: listIndex) {
                 let reminderPosition: (Int, Int) = (listIndex, reminderIndex)
-                print("1) Change title")
-                print("2) Change note")
-                print("3) Change date")
-                print("4) Change time")
-                print("0) Exit")
-                
-                let input = readLine() ?? "-1"
-                let choice = Int(input)
-                
-                switch choice {
-                case 0:
-                    return
-                case 1:
-                    changeReminderTitle(reminder: reminderPosition)
-                case 2:
-                    changeReminderNote(reminder: reminderPosition)
-                case 3:
-                    changeReminderDate(reminder: reminderPosition)
-                case 4:
-                    changeReminderTime(reminder: reminderPosition)
-                default:
-                    print("Option not found, try again...")
+                while true {
+                    print("1) Change title")
+                    print("2) Change note")
+                    print("3) Change date")
+                    print("4) Change time")
+                    print("0) Exit")
+                    
+                    let input = readLine() ?? "-1"
+                    let choice = Int(input)
+                    
+                    switch choice {
+                        case 0:
+                            return
+                        case 1:
+                            changeReminderTitle(reminder: reminderPosition)
+                        case 2:
+                            changeReminderNote(reminder: reminderPosition)
+                        case 3:
+                            changeReminderDate(reminder: reminderPosition)
+                        case 4:
+                            changeReminderTime(reminder: reminderPosition)
+                        default:
+                            print("Option not found, try again...")
+                    }
                 }
             } else {
                 print("It's not possible to find this reminder.")
@@ -227,14 +238,16 @@ struct Main {
         if myLists.isEmpty || index >= myLists.count || myLists[index].reminders.isEmpty { //MARK: --THIS ORDER MATTERS!
             return nil
         } else {
+            print("Digit the number in the reminder's side to select it:")
+            
             var count = 1 //MARK: --START WITH 1, BUT ARRAYS BEGIN WITH 0. THEN, WILL BE SUBTRACTED 1 BELLOW TO MATCH TO THE INDEX.
             for reminder in myLists[index].reminders {
                 print(count, reminder.title)
                 count += 1
             }
-            print("Digit the number in the reminder's side to select it:")
             var informedIndex = Int(readLine() ?? "-1") ?? -1
             informedIndex -= 1 //MARK: --SUBTRACTING 1 TO MATCH WITH THE INDEX.
+            
             return (informedIndex >= 0 && informedIndex < myLists[index].reminders.count) ? informedIndex : nil
         }
     }
@@ -244,14 +257,16 @@ struct Main {
             print("There's no list to show.")
             return nil
         } else {
+            print("Digit the number in the list's side to select it:")
+            
             var count = 1 //MARK: --START WITH 1, BUT ARRAYS BEGIN WITH 0. THEN, WILL BE SUBTRACTED 1 BELLOW TO MATCH TO THE INDEX.
             for list in myLists {
                 print(count, list.title)
                 count += 1
             }
-            print("Digit the number in the list's side to select it:")
             var informedIndex = Int(readLine() ?? "-1") ?? -1
             informedIndex -= 1 //MARK: --SUBTRACTING 1 TO MATCH WITH THE INDEX.
+            
             return (informedIndex >= 0 && informedIndex < myLists.count) ? informedIndex : nil
         }
     }
