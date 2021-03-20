@@ -7,6 +7,11 @@
 
 import Foundation
 
+private enum Scope {
+    case scheduled
+    case today
+}
+
 struct Main {
     var myLists: [List]
     var local: Locale
@@ -37,9 +42,9 @@ struct Main {
                 case 0:
                     return
                 case 1:
-                    showReminders(scope: .today)
+                    showReminders(scope: Scope.today)
                 case 2:
-                    showReminders(scope: .scheduled)
+                    showReminders(scope: Scope.scheduled)
                 case 3:
                     showMyLists()
                 case 4:
@@ -78,10 +83,7 @@ struct Main {
     }
     //TODO: Extract part of those functions that are similar, to another function. //using enum
     
-    private enum Scope {
-        case scheduled
-        case today
-    }
+    
     
     private mutating func showReminders(scope: Scope) {
         for list in myLists {
@@ -89,7 +91,7 @@ struct Main {
                 switch scope {
                 case .scheduled:
                     if let _ = reminder.date {
-                        print(reminder.scheduledTime)
+                        print("scheduled \(reminder.scheduledTime)")
                     }
                 case .today:
                     if let _ = reminder.date {
@@ -100,7 +102,7 @@ struct Main {
                         dateFormatter.timeStyle = .short
                         
                         if reminder.scheduledTime == dateFormatter.string(from: date){
-                            print(reminder.scheduledTime)
+                            print("today \(reminder.scheduledTime)")
                         }
                         
                     }
@@ -154,9 +156,9 @@ struct Main {
             
             print("Which reminders you want to edit?")
             print("\(cont): \(tasks)")
-            remindersChoice = readLine() ?? ""
             cont += 1
         }
+        remindersChoice = readLine() ?? ""
         let indexReminders = Int(remindersChoice)
         return indexReminders ?? 0
     }
