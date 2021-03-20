@@ -7,17 +7,10 @@
 
 import Foundation
 
-enum Priority {
-    case low
-    case medium
-    case high
-}
-
 struct Reminder {
     var title: String
     var notes: String?
     var date: DateComponents?
-    var priority: Priority?
     var scheduledTime: String {
         //"\(date?.day ?? 0)/\(date?.month ?? 0)/\(date?.year ?? 0) \(date?.hour ?? 0):\(date?.minute ?? 0)"
         var str: String = ""

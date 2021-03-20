@@ -24,7 +24,8 @@ struct Main {
             print("4) Add List")
             print("5) Add Reminder")
             print("6) Remove List")
-            print("7) edit Reminder")
+            print("7) Remove Reminder")
+            print("8) Edit Reminder")
             print("0) Exit")
             
             
@@ -47,10 +48,13 @@ struct Main {
             case 6:
                 removeList()
             case 7:
+                removeReminder()
+            case 8:
                 editReminder()
             default:
                 print("Option not found, try again...")
             }
+            print("")
         }
     }
     
@@ -59,7 +63,6 @@ struct Main {
         case today
     }
     
-    //TODO: Understand what is happening with dateFormater...
     private func showReminders(scope: Scope) {
         for list in myLists {
             for reminder in list.reminders {
@@ -86,13 +89,13 @@ struct Main {
     }
     
     
-    //TODO: select list and show reminders inside the list...
     func showMyLists() {
         for list in myLists {
-            print(list.title)
+            print("List: ", list.title)
             for reminder in list.reminders {
                 print(reminder.title)
             }
+            print("")
         }
     }
     
@@ -100,14 +103,18 @@ struct Main {
         if let index = selectListIndex() {
             print("Write the reminder's title:")
             let title = readLine() ?? "_DEFAULT_TITLE_"
-            myLists[index].reminders.append(Reminder(title: title, notes: nil, date: nil, priority: nil))
+            myLists[index].reminders.append(Reminder(title: title, notes: nil, date: nil))
             print("Reminder created!")
         }
     }
     
-    //MARK: --TODO: WORK IN PROGRESS... finish this!
     func removeReminder() {
-        //TODO: Write logic.
+        if let listIndex = selectListIndex(){
+            if let reminderIndex = selectReminderIndex(list: listIndex) {
+                let temp = myLists[listIndex].reminders.remove(at: reminderIndex)
+                print("Removed: ", temp.title)
+            }
+        }
     }
     
     mutating func addList() {
@@ -123,7 +130,8 @@ struct Main {
     
     mutating func removeList() {
         if let index = selectListIndex() {
-            print(_: "Reminder removed:", myLists.remove(at: index).title, separator: "\n", terminator: "\n")
+            let removedList = myLists.remove(at: index)
+            print(_: "Reminder removed:", removedList.title)
         } else {
             print("It's not possible to find the list.")
         }
@@ -137,7 +145,6 @@ struct Main {
                 print("2) Change note")
                 print("3) Change date")
                 print("4) Change time")
-                print("5) Change priority")
                 print("0) Exit")
                 
                 let input = readLine() ?? "-1"
@@ -154,16 +161,14 @@ struct Main {
                     changeReminderDate(reminder: reminderPosition)
                 case 4:
                     changeReminderTime(reminder: reminderPosition)
-                case 5:
-                    changeReminderPriority(reminder: reminderPosition)
                 default:
                     print("Option not found, try again...")
                 }
             } else {
-                print("nao leu select reminder")
+                print("It's not possible to find this reminder.")
             }
         } else {
-            print("nao leu select list")
+            print("It's not possible to find this list.")
         }
     }
     
@@ -181,46 +186,39 @@ struct Main {
         if let description = readLine() {
             myLists[index.ofList].reminders[index.ofReminder].notes = description
         } else {
-            print("It's not possible to set this note.")
+            print("It's not possible to set to this note.")
         }
     }
     
-    //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderDate(reminder index: (ofList: Int, ofReminder: Int)) {
-        print("Write reminder's new day, in format DD:")
+        print("Write reminder's new day:")
         let changedDay = readLine() ?? ""
         
-        print("Write reminder's new month, in format MM:")
+        print("Write reminder's new month:")
         let changedMonth = readLine() ?? ""
         
-        print("Write reminder's new year, in format YY:")
+        print("Write reminder's new year:")
         let changedYear = readLine() ?? ""
         
         if let intDay = Int(changedDay), let intMonth = Int(changedMonth), let intYear = Int(changedYear) {
             myLists[index.ofList].reminders[index.ofReminder].setDate(year: intYear, month: intMonth, day: intDay)
         } else {
-            print("nao deu crm...")
+            print("It's not possible to set to this time.")
         }
     }
     
-    //MARK: --TODO: WORK IN PROGRESS... finish this!
     private func changeReminderTime(reminder index: (ofList: Int, ofReminder: Int)) {
-        print("Print hour!")
+        print("Write a hour:")
         let changedHour = readLine() ?? ""
         
-        print("Print minute!")
+        print("Write a minute:")
         let changedMinute = readLine() ?? ""
         
         if let intHour = Int(changedHour), let intMinute = Int(changedMinute) {
             myLists[index.ofList].reminders[index.ofReminder].setTime(hour: intHour, minute: intMinute)
         } else {
-            print("nao deu")
+            print("It's not possible to set to this time.")
         }
-    }
-    
-    //MARK: --TODO: WORK IN PROGRESS... finish this!
-    private func changeReminderPriority(reminder index: (ofList: Int, ofReminder: Int)) {
-        //TODO: Write logic.
     }
     
     private func selectReminderIndex(list index: Int) -> Int? {
