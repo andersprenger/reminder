@@ -95,14 +95,14 @@ struct Main {
                 print("List: ", list.title)
                 for reminder in list.reminders {
                     print(_: "-", terminator: "")
-                    print(reminder.title, "at:", terminator: "")
+                    print(reminder.title, "at: ", terminator: "")
                     if let _ = reminder.date {
                         print(reminder.scheduledTime)
                     } else {
                         print("")
                     }
                     if let notes = reminder.notes {
-                        print(notes)
+                        print("Notes: ", notes)
                     }
                 }
                 print("")
