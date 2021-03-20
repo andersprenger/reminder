@@ -95,9 +95,9 @@ struct Main {
                 print("List: ", list.title)
                 for reminder in list.reminders {
                     print(_: "-", terminator: "")
-                    print(reminder.title, terminator: "")
+                    print(reminder.title)
                     if let _ = reminder.date {
-                        print("at: ", reminder.scheduledTime)
+                        print("- ", reminder.scheduledTime)
                     } else {
                         print("")
                     }
